@@ -6,11 +6,11 @@ import React, { useState, useRef, useEffect } from 'react';
 
 const ChatPage: React.FC = () => {
   const [message, setMessage] = useState('');
-  const [messages, setMessages] = useState<string[]>([
-    'Olá, como posso ajudar?',
-    'Oi, gostaria de saber mais sobre os seus serviços.',
-    'Claro, vou te enviar as informações agora.',
-    'Muito obrigado!',
+  const [messages, setMessages] = useState<{ text: string; sender: 'user' | 'bot' }[]>([
+    { text: 'Olá, como posso ajudar?', sender: 'bot' },
+    { text: 'Oi, gostaria de saber mais sobre os seus serviços.', sender: 'user' },
+    { text: 'Claro, vou te enviar as informações agora.', sender: 'bot' },
+    { text: 'Muito obrigado!', sender: 'user' },
   ]);
   const [isStreaming, setIsStreaming] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -19,7 +19,7 @@ const ChatPage: React.FC = () => {
     e.preventDefault();
     if (message.trim()) {
       console.log('Mensagem enviada:', message);
-      setMessages((prevMessages) => [...prevMessages, message]);
+      setMessages((prevMessages) => [...prevMessages, { text: message, sender: 'user' }]);
       setMessage('');
       setIsStreaming(true);
       // Simulate streaming for 5 seconds
@@ -69,8 +69,12 @@ const ChatPage: React.FC = () => {
     <div className="flex flex-col h-full">
       <div className="flex-grow overflow-y-auto p-4 bg-gray-900">
         {messages.map((msg, index) => (
-          <div key={index} className="mb-2 p-2 rounded bg-gray-800 text-white">
-            {msg}
+          <div
+            key={index}
+            className={`mb-2 p-2 rounded-lg text-white max-w-[75%] ${msg.sender === 'user' ? 'bg-blue-500 self-end ml-auto' : 'bg-gray-800 self-start'
+              }`}
+          >
+            {msg.text}
           </div>
         ))}
       </div>
