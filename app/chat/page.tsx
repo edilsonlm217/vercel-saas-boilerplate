@@ -13,6 +13,7 @@ const ChatPage: React.FC = () => {
     { text: 'Muito obrigado!', sender: 'user' },
   ]);
   const [isStreaming, setIsStreaming] = useState(false);
+  const [showScrollButton, setShowScrollButton] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
 
@@ -80,6 +81,14 @@ const ChatPage: React.FC = () => {
     }
   };
 
+  const handleScroll = () => {
+    if (messagesContainerRef.current) {
+      const { scrollTop } = messagesContainerRef.current;
+      const isAtBottom = scrollTop === 0;
+      setShowScrollButton(!isAtBottom);
+    }
+  };
+
   useEffect(() => {
     adjustTextareaHeight();
   }, [message]);
@@ -87,6 +96,16 @@ const ChatPage: React.FC = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  useEffect(() => {
+    const container = messagesContainerRef.current;
+    if (container) {
+      container.addEventListener('scroll', handleScroll);
+      return () => {
+        container.removeEventListener('scroll', handleScroll);
+      };
+    }
+  }, []);
 
   return (
     <div className="flex flex-col relative" style={{ height: 'calc(100vh - 5rem)' }}>
@@ -105,12 +124,14 @@ const ChatPage: React.FC = () => {
           </div>
         ))}
       </div>
-      <button
-        className="absolute bottom-[6rem] left-1/2 transform -translate-x-1/2 bg-gray-500 hover:bg-gray-400 text-white rounded-full p-2 shadow-md"
-        onClick={scrollToBottom}
-      >
-        <ArrowDown className="h-4 w-4" />
-      </button>
+      {showScrollButton && (
+        <button
+          className="absolute bottom-[6rem] left-1/2 transform -translate-x-1/2 bg-gray-500 hover:bg-gray-400 text-white rounded-full p-2 shadow-md"
+          onClick={scrollToBottom}
+        >
+          <ArrowDown className="h-4 w-4" />
+        </button>
+      )}
       <form className="flex items-end gap-2 p-4 bg-gray-800" onSubmit={handleSubmit}>
         <div className="flex-grow flex items-center">
           <textarea
