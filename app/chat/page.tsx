@@ -43,7 +43,7 @@ const ChatPage: React.FC = () => {
   }, [message]);
 
   return (
-    <form className="flex items-center gap-2 p-4 bg-gray-800" onSubmit={handleSubmit}>
+    <form className="flex items-end gap-2 p-4 bg-gray-800" onSubmit={handleSubmit}>
       <div className="flex-grow flex items-center">
         <textarea
           ref={textareaRef}
@@ -55,17 +55,19 @@ const ChatPage: React.FC = () => {
           style={{ minHeight: 'auto', overflow: 'hidden' }}
         />
       </div>
-      <Button
-        type="submit"
-        variant="default"
-        size="icon"
-        className={`${!message.trim() && !isStreaming ? 'bg-gray-600' : 'bg-gray-500 hover:bg-gray-400'
-          } text-white`}
-        disabled={!message.trim() && !isStreaming}
-        onClick={isStreaming ? handleStop : undefined}
-      >
-        {isStreaming ? <Square className="h-4 w-4" /> : <Send className="h-4 w-4" />}
-      </Button>
+      <div className="flex items-end">
+        <Button
+          type="submit"
+          variant="default"
+          size="icon"
+          className={`${!message.trim() && !isStreaming ? 'bg-gray-600' : 'bg-gray-500 hover:bg-gray-400'
+            } text-white`}
+          disabled={!message.trim() && !isStreaming}
+          onClick={isStreaming ? handleStop : undefined}
+        >
+          {isStreaming ? <Square className="h-4 w-4" /> : <Send className="h-4 w-4" />}
+        </Button>
+      </div>
     </form>
   );
 };
