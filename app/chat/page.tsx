@@ -32,6 +32,14 @@ const ChatPage: React.FC = () => {
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+
+      // Limitar altura máxima
+      if (textareaRef.current.scrollHeight > 160) {
+        textareaRef.current.style.height = '160px';
+        textareaRef.current.style.overflowY = 'scroll';
+      } else {
+        textareaRef.current.style.overflowY = 'hidden';
+      }
     }
   };
 
@@ -39,6 +47,14 @@ const ChatPage: React.FC = () => {
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+
+      // Limitar altura máxima na inicialização
+      if (textareaRef.current.scrollHeight > 160) {
+        textareaRef.current.style.height = '160px';
+        textareaRef.current.style.overflowY = 'scroll';
+      } else {
+        textareaRef.current.style.overflowY = 'hidden';
+      }
     }
   }, [message]);
 
@@ -52,7 +68,7 @@ const ChatPage: React.FC = () => {
           placeholder="Digite sua mensagem..."
           rows={1}
           className="w-full px-3 py-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-gray-500 resize-none"
-          style={{ minHeight: 'auto', overflow: 'hidden' }}
+          style={{ minHeight: 'auto', maxHeight: '160px', overflow: 'hidden' }}
         />
       </div>
       <div className="flex items-end">
