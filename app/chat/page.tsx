@@ -73,13 +73,20 @@ const ChatPage: React.FC = () => {
 
   const scrollToBottom = () => {
     if (messagesContainerRef.current) {
-      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+      messagesContainerRef.current.scrollTo({
+        top: messagesContainerRef.current.scrollHeight,
+        behavior: 'smooth'
+      });
     }
   };
 
   useEffect(() => {
     adjustTextareaHeight();
   }, [message]);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   return (
     <div className="flex flex-col relative" style={{ height: 'calc(100vh - 5rem)' }}>
