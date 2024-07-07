@@ -60,17 +60,23 @@ const ChatPage: React.FC = () => {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      sendMessage();
+      e.preventDefault(); // Evita o comportamento padrão de enviar o formulário
+
+      if (!isStreaming) {
+        sendMessage(); // Envia a mensagem apenas se não estiver em streaming
+      } else {
+        setMessage((prevMessage) => prevMessage + '\n'); // Quebra linha se estiver em streaming
+      }
     }
   };
+
 
   useEffect(() => {
     adjustTextareaHeight();
   }, [message]);
 
   return (
-    <div className="flex flex-col" style={{ height: 'calc(100vh - 4rem)' }}>
+    <div className="flex flex-col" style={{ height: 'calc(100vh - 5rem)' }}>
       <div className="flex-grow overflow-y-auto p-4 bg-gray-900 flex flex-col-reverse pb-[8rem]">
         {messages.slice(0).reverse().map((msg, index) => (
           <div
@@ -82,7 +88,7 @@ const ChatPage: React.FC = () => {
           </div>
         ))}
       </div>
-      {/* <form className="flex items-end gap-2 p-4 bg-gray-800" onSubmit={handleSubmit}>
+      <form className="flex items-end gap-2 p-4 bg-gray-800" onSubmit={handleSubmit}>
         <div className="flex-grow flex items-center">
           <textarea
             ref={textareaRef}
@@ -107,7 +113,7 @@ const ChatPage: React.FC = () => {
             {isStreaming ? <Square className="h-4 w-4" /> : <Send className="h-4 w-4" />}
           </Button>
         </div>
-      </form> */}
+      </form>
     </div>
   );
 };
