@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/shadcn/ui/button';
-import { Send, Square } from 'lucide-react';
+import { Send, Square, ArrowDown } from 'lucide-react';
 import React, { useState, useRef, useEffect } from 'react';
 
 const ChatPage: React.FC = () => {
@@ -14,6 +14,7 @@ const ChatPage: React.FC = () => {
   ]);
   const [isStreaming, setIsStreaming] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -70,14 +71,19 @@ const ChatPage: React.FC = () => {
     }
   };
 
+  const scrollToBottom = () => {
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+    }
+  };
 
   useEffect(() => {
     adjustTextareaHeight();
   }, [message]);
 
   return (
-    <div className="flex flex-col" style={{ height: 'calc(100vh - 5rem)' }}>
-      <div className="flex-grow overflow-y-auto p-4 bg-gray-900 flex flex-col-reverse pb-[8rem]">
+    <div className="flex flex-col relative" style={{ height: 'calc(100vh - 5rem)' }}>
+      <div ref={messagesContainerRef} className="flex-grow overflow-y-auto p-4 bg-gray-900 flex flex-col-reverse pb-[8rem]">
         {messages.slice(0).reverse().map((msg, index) => (
           <div
             key={index}
@@ -92,6 +98,12 @@ const ChatPage: React.FC = () => {
           </div>
         ))}
       </div>
+      <button
+        className="absolute bottom-[6rem] left-1/2 transform -translate-x-1/2 bg-gray-500 hover:bg-gray-400 text-white rounded-full p-2 shadow-md"
+        onClick={scrollToBottom}
+      >
+        <ArrowDown className="h-4 w-4" />
+      </button>
       <form className="flex items-end gap-2 p-4 bg-gray-800" onSubmit={handleSubmit}>
         <div className="flex-grow flex items-center">
           <textarea
