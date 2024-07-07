@@ -109,11 +109,11 @@ const ChatPage: React.FC = () => {
 
   return (
     <div className="flex flex-col relative max-w-6xl mx-auto" style={{ height: 'calc(100vh - 5rem)' }}>
-      <div ref={messagesContainerRef} className="flex-grow overflow-y-auto p-4 bg-gray-900 flex flex-col-reverse">
+      <div ref={messagesContainerRef} className="flex-grow overflow-y-auto px-4 xl:px-0 py-4 md:py-4 bg-black-900 flex flex-col-reverse">
         {messages.slice(0).reverse().map((msg, index) => (
           <div
             key={index}
-            className={`mb-2 p-2 rounded-lg text-white max-w-[75%] ${msg.sender === 'user' ? 'bg-blue-500 self-end ml-auto' : 'bg-gray-800 self-start'}`}
+            className={`mb-2 p-2 rounded-lg text-white max-w-[75%] ${msg.sender === 'user' ? 'bg-gray-900 self-end ml-auto' : 'bg-gray-950 self-start'}`}
             style={{
               maxWidth: '75%',
               clear: 'both',
@@ -132,7 +132,7 @@ const ChatPage: React.FC = () => {
           <ArrowDown className="h-4 w-4" />
         </button>
       )}
-      <form className="flex items-end gap-2 p-4 bg-gray-800" onSubmit={handleSubmit}>
+      <form className="flex items-end gap-2 px-4 xl:px-0 py-4 md:py-4" onSubmit={handleSubmit}>
         <div className="flex-grow flex items-center">
           <textarea
             ref={textareaRef}
@@ -141,7 +141,7 @@ const ChatPage: React.FC = () => {
             onKeyDown={handleKeyDown}
             placeholder="Digite sua mensagem..."
             rows={1}
-            className="w-full px-3 py-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-gray-500 resize-none"
+            className="w-full px-3 py-2 rounded-lg bg-zinc-950 text-white focus:outline-none focus:ring-2 focus:ring-gray-500 resize-none"
             style={{ minHeight: 'auto', maxHeight: '160px', overflow: 'hidden' }}
           />
         </div>
