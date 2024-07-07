@@ -14,6 +14,17 @@ const ChatPage: React.FC = () => {
   ]);
   const [isStreaming, setIsStreaming] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -67,7 +78,7 @@ const ChatPage: React.FC = () => {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="flex-grow overflow-y-auto p-4 bg-gray-900 flex flex-col-reverse">
+      <div className="flex-grow overflow-y-auto p-4 bg-gray-900">
         {messages.map((msg, index) => (
           <div
             key={index}
@@ -78,6 +89,7 @@ const ChatPage: React.FC = () => {
             {msg.text}
           </div>
         ))}
+        <div ref={messagesEndRef}></div>
       </div>
       <form className="flex items-end gap-2 p-4 bg-gray-800" onSubmit={handleSubmit}>
         <div className="flex-grow flex items-center">
