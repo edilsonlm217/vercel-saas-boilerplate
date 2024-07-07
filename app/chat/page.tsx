@@ -108,7 +108,7 @@ const ChatPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex flex-col relative max-w-6xl mx-auto" style={{ height: 'calc(100vh - 5rem)' }}>
+    <div className="flex flex-col relative max-w-3xl mx-auto" style={{ height: 'calc(100vh - 5rem)' }}>
       <div ref={messagesContainerRef} className="flex-grow overflow-y-auto px-4 xl:px-0 py-4 md:py-4 bg-black-900 flex flex-col-reverse">
         {messages.slice(0).reverse().map((msg, index) => (
           <div
