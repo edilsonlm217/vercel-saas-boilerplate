@@ -67,8 +67,8 @@ const ChatPage: React.FC = () => {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="flex-grow overflow-y-auto p-4 bg-gray-900 flex flex-col-reverse">
-        {messages.map((msg, index) => (
+      <div className="flex-grow overflow-y-auto p-4 bg-gray-900 flex flex-col-reverse" style={{ minHeight: '0' }}>
+        {messages.slice(0).reverse().map((msg, index) => (
           <div
             key={index}
             className={`mb-2 p-2 rounded-lg text-white max-w-[75%] ${msg.sender === 'user' ? 'bg-blue-500 self-end ml-auto' : 'bg-gray-800 self-start'
