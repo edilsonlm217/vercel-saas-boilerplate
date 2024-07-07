@@ -118,6 +118,7 @@ const ChatPage: React.FC = () => {
               maxWidth: '75%',
               clear: 'both',
               whiteSpace: 'pre-wrap',
+              wordWrap: 'break-word',
             }}
           >
             {msg.text}
