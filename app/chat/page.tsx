@@ -115,7 +115,6 @@ const ChatPage: React.FC = () => {
             key={index}
             className={`mb-2 p-2 rounded-lg text-white max-w-[75%] ${msg.sender === 'user' ? 'bg-gray-900 self-end ml-auto' : 'bg-gray-950 self-start'}`}
             style={{
-              maxWidth: '75%',
               clear: 'both',
               whiteSpace: 'pre-wrap',
               wordWrap: 'break-word',
