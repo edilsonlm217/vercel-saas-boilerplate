@@ -70,20 +70,19 @@ const ChatPage: React.FC = () => {
   }, [message]);
 
   return (
-    <div className="flex flex-col h-full">
-      <div className="flex-grow overflow-y-auto p-4 bg-gray-900 flex flex-col-reverse" style={{ minHeight: '0' }}>
+    <div className="flex flex-col" style={{ height: 'calc(100vh - 4rem)' }}>
+      <div className="flex-grow overflow-y-auto p-4 bg-gray-900 flex flex-col-reverse">
         {messages.slice(0).reverse().map((msg, index) => (
           <div
             key={index}
-            className={`mb-2 p-2 rounded-lg text-white max-w-[75%] ${msg.sender === 'user' ? 'bg-blue-500 self-end ml-auto' : 'bg-gray-800 self-start'
-              }`}
+            className={`mb-2 p-2 rounded-lg text-white max-w-[75%] ${msg.sender === 'user' ? 'bg-blue-500 self-end ml-auto' : 'bg-gray-800 self-start'}`}
             style={{ maxWidth: '75%', clear: 'both' }}
           >
             {msg.text}
           </div>
         ))}
       </div>
-      <form className="flex items-end gap-2 p-4 bg-gray-800" onSubmit={handleSubmit}>
+      {/* <form className="flex items-end gap-2 p-4 bg-gray-800" onSubmit={handleSubmit}>
         <div className="flex-grow flex items-center">
           <textarea
             ref={textareaRef}
@@ -101,15 +100,14 @@ const ChatPage: React.FC = () => {
             type="submit"
             variant="default"
             size="icon"
-            className={`${!message.trim() && !isStreaming ? 'bg-gray-600' : 'bg-gray-500 hover:bg-gray-400'
-              } text-white`}
+            className={`${!message.trim() && !isStreaming ? 'bg-gray-600' : 'bg-gray-500 hover:bg-gray-400'} text-white`}
             disabled={!message.trim() && !isStreaming}
             onClick={isStreaming ? handleStop : undefined}
           >
             {isStreaming ? <Square className="h-4 w-4" /> : <Send className="h-4 w-4" />}
           </Button>
         </div>
-      </form>
+      </form> */}
     </div>
   );
 };
