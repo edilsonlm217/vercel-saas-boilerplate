@@ -3,7 +3,8 @@ import remarkGfm from 'remark-gfm';
 import ReactMarkdown from 'react-markdown';
 import clsx from 'clsx';
 
-import { Message, Sender } from '../types/message.types';
+import { Message } from '../types/message.types';
+import { Sender } from '../types/sender.enum';
 
 type MessageItemProps = {
   message: Message;
