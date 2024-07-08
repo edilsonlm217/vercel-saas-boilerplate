@@ -1,4 +1,6 @@
+import { Sender } from "./sender.enum";
+
 export type Message = {
   text: string;
-  sender: 'user' | 'bot';
+  sender: Sender;
 };
