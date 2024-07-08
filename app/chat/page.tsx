@@ -4,10 +4,9 @@ import { Button } from '@/components/shadcn/ui/button';
 import { Send, Square, ArrowDown } from 'lucide-react';
 import React, { useState, useRef, useEffect } from 'react';
 
-type Message = {
-  text: string;
-  sender: 'user' | 'bot';
-};
+import MessageItem from './components/MessageItem';
+
+import { Message } from './types/message.types';
 
 const ChatPage: React.FC = () => {
   const [message, setMessage] = useState('');
@@ -116,17 +115,7 @@ const ChatPage: React.FC = () => {
     <div className="flex flex-col relative max-w-3xl mx-auto" style={{ height: 'calc(100vh - 5rem)' }}>
       <div ref={messagesContainerRef} className="flex-grow overflow-y-auto px-4 xl:px-0 py-4 md:py-4 bg-black-900 flex flex-col-reverse">
         {messages.slice(0).reverse().map((msg, index) => (
-          <div
-            key={index}
-            className={`mb-2 p-2 rounded-lg text-white max-w-[75%] ${msg.sender === 'user' ? 'bg-gray-900 self-end ml-auto' : 'bg-gray-950 self-start'}`}
-            style={{
-              clear: 'both',
-              whiteSpace: 'pre-wrap',
-              wordWrap: 'break-word',
-            }}
-          >
-            {msg.text}
-          </div>
+          <MessageItem key={index} message={msg} />
         ))}
       </div>
       {showScrollButton && (
