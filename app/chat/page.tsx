@@ -4,9 +4,14 @@ import { Button } from '@/components/shadcn/ui/button';
 import { Send, Square, ArrowDown } from 'lucide-react';
 import React, { useState, useRef, useEffect } from 'react';
 
+type Message = {
+  text: string;
+  sender: 'user' | 'bot';
+};
+
 const ChatPage: React.FC = () => {
   const [message, setMessage] = useState('');
-  const [messages, setMessages] = useState<{ text: string; sender: 'user' | 'bot' }[]>([
+  const [messages, setMessages] = useState<Message[]>([
     { text: 'Olá, como posso ajudar?', sender: 'bot' },
     { text: 'Oi, gostaria de saber mais sobre os seus serviços.', sender: 'user' },
     { text: 'Claro, vou te enviar as informações agora.', sender: 'bot' },
