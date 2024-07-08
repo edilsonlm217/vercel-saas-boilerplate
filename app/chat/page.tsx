@@ -1,20 +1,19 @@
 'use client';
 
-import { Button } from '@/components/shadcn/ui/button';
-import { Send, Square, ArrowDown } from 'lucide-react';
 import React, { useState, useRef, useEffect } from 'react';
-
+import { Send, Square, ArrowDown } from 'lucide-react';
+import { Button } from '@/components/shadcn/ui/button';
 import MessageItem from './components/MessageItem';
 
 import { Message } from './types/message.types';
+import { Sender } from './types/sender.enum';
 
 const ChatPage: React.FC = () => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<Message[]>([
-    { text: 'Olá, como posso ajudar?', sender: 'bot' },
-    { text: 'Oi, gostaria de saber mais sobre os seus serviços.', sender: 'user' },
-    { text: 'Claro, vou te enviar as informações agora.', sender: 'bot' },
-    { text: 'Muito obrigado!', sender: 'user' },
+    { text: 'Olá! Eu sou o bot.', sender: Sender.Bot },
+    { text: '### Título\n\n- Bullet point 1\n- Bullet point 2\n\n| Cabeçalho 1 | Cabeçalho 2 |\n|-------------|-------------|\n| Celula 1    | Celula 2    |', sender: Sender.Bot },
+    { text: 'Olá, bot!', sender: Sender.User },
   ]);
   const [isStreaming, setIsStreaming] = useState(false);
   const [showScrollButton, setShowScrollButton] = useState(false);
@@ -29,7 +28,7 @@ const ChatPage: React.FC = () => {
   const sendMessage = () => {
     if (message.trim()) {
       console.log('Mensagem enviada:', message);
-      setMessages((prevMessages) => [...prevMessages, { text: message, sender: 'user' }]);
+      setMessages((prevMessages) => [...prevMessages, { text: message, sender: Sender.User }]);
       setMessage('');
       setIsStreaming(true);
       // Simulate streaming for 5 seconds
