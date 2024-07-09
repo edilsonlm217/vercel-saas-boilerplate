@@ -28,7 +28,6 @@ const ResizableTextarea: React.FC<React.TextareaHTMLAttributes<HTMLTextAreaEleme
       {...restProps}
       ref={textareaRef}
       rows={1}
-      style={{ minHeight: 'auto', maxHeight: '160px', overflow: 'hidden' }}
     />
   );
 };
