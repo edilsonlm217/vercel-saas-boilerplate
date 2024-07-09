@@ -1,18 +1,18 @@
 'use client';
 
-import React, { useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Send, Square } from 'lucide-react';
 import { Button } from '@/components/shadcn/ui/button';
 
 import MessageList from './components/MessageList';
 import useMessageManager from './hooks/useMessageManager';
 import { Sender } from './types/sender.enum';
+import ResizableTextarea from './components/ResizableTextarea';
 
 const ChatPage: React.FC = () => {
   const { messages, addMessage } = useMessageManager();
-  const [message, setMessage] = React.useState('');
-  const [isStreaming, setIsStreaming] = React.useState(false);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [message, setMessage] = useState('');
+  const [isStreaming, setIsStreaming] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,26 +37,6 @@ const ChatPage: React.FC = () => {
     console.log('Streaming stopped');
   };
 
-  const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setMessage(e.target.value);
-    adjustTextareaHeight();
-  };
-
-  const adjustTextareaHeight = () => {
-    if (textareaRef.current) {
-      textareaRef.current.style.height = 'auto';
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-
-      // Limitar altura máxima
-      if (textareaRef.current.scrollHeight > 160) {
-        textareaRef.current.style.height = '160px';
-        textareaRef.current.style.overflowY = 'scroll';
-      } else {
-        textareaRef.current.style.overflowY = 'hidden';
-      }
-    }
-  };
-
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault(); // Evita o comportamento padrão de enviar o formulário
@@ -69,24 +49,17 @@ const ChatPage: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    adjustTextareaHeight();
-  }, [message]);
-
   return (
     <div className="flex flex-col relative max-w-3xl mx-auto" style={{ height: 'calc(100vh - 5rem)' }}>
       <MessageList messages={messages} /> {/* Usa as mensagens do hook useMessageManager */}
       <form className="flex items-end gap-2 px-4 xl:px-0 py-4 md:py-4" onSubmit={handleSubmit}>
         <div className="flex-grow flex items-center">
-          <textarea
-            ref={textareaRef}
+          <ResizableTextarea
             value={message}
-            onChange={handleInput}
+            onChange={setMessage}
             onKeyDown={handleKeyDown}
             placeholder="Digite sua mensagem..."
-            rows={1}
-            className="w-full px-3 py-2 rounded-lg bg-zinc-950 text-white focus:outline-none focus:ring-2 focus:ring-gray-500 resize-none"
-            style={{ minHeight: 'auto', maxHeight: '160px', overflow: 'hidden' }}
+            maxHeight={160}
           />
         </div>
         <div className="flex items-end">
