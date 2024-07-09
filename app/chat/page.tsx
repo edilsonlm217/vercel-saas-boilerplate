@@ -106,7 +106,8 @@ const ChatPage: React.FC = () => {
   const handleScroll = () => {
     if (messagesContainerRef.current) {
       const { scrollTop } = messagesContainerRef.current;
-      const isAtBottom = scrollTop === 0;
+      console.log(messagesContainerRef.current.scrollTop);
+      const isAtBottom = scrollTop >= -10;
       setShowScrollButton(!isAtBottom);
     }
   };
