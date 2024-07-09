@@ -11,10 +11,29 @@ import { Sender } from './types/sender.enum';
 const ChatPage: React.FC = () => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<Message[]>([
+    // Nível 1: Mensagens de boas-vindas
     { text: 'Olá! Eu sou o bot.', sender: Sender.Bot },
-    { text: '### Título\n\n- Bullet point 1\n- Bullet point 2\n\n| Cabeçalho 1 | Cabeçalho 2 |\n|-------------|-------------|\n| Celula 1    | Celula 2    |', sender: Sender.Bot },
     { text: 'Olá, bot!', sender: Sender.User },
+  
+    // Nível 2: Mensagens de formatação de texto
+    { text: '**Texto em negrito**', sender: Sender.Bot },
+    { text: '*Texto em itálico*', sender: Sender.Bot },
+    { text: '~~Texto riscado~~', sender: Sender.Bot },
+    { text: '> Citação em bloco', sender: Sender.Bot },
+    { text: '[Link para o Google](https://www.google.com)', sender: Sender.Bot },
+    { text: '# Título', sender: Sender.Bot },
+    { text: '## Subtítulo', sender: Sender.Bot },
+  
+    // Nível 3: Mensagens de bullet points
+    { text: '### Lista de Bullet Points\n\n- Bullet point 1\n- Bullet point 2\n- Bullet point 3', sender: Sender.Bot },
+  
+    // Nível 4: Mensagens de tabelas
+    { text: '### Tabela de Exemplo\n| Cabeçalho 1 | Cabeçalho 2 |\n|-------------|-------------|\n| Celula 1    | Celula 2    |\n| Celula 3    | Celula 4    |', sender: Sender.Bot },
+  
+    // Mensagens adicionais se necessário
+    { text: '1. Item 1\n2. Item 2\n3. Item 3', sender: Sender.Bot },
   ]);
+  
   const [isStreaming, setIsStreaming] = useState(false);
   const [showScrollButton, setShowScrollButton] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
