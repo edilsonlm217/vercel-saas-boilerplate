@@ -1,40 +1,17 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
-import { Send, Square, } from 'lucide-react';
+import React, { useRef, useEffect } from 'react';
+import { Send, Square } from 'lucide-react';
 import { Button } from '@/components/shadcn/ui/button';
 
-import { Message } from './types/message.types';
-import { Sender } from './types/sender.enum';
 import MessageList from './components/MessageList';
+import useMessageManager from './hooks/useMessageManager';
+import { Sender } from './types/sender.enum';
 
 const ChatPage: React.FC = () => {
-  const [message, setMessage] = useState('');
-  const [messages, setMessages] = useState<Message[]>([
-    // Nível 1: Mensagens de boas-vindas
-    { text: 'Olá! Eu sou o bot.', sender: Sender.Bot },
-    { text: 'Olá, bot!', sender: Sender.User },
-
-    // Nível 2: Mensagens de formatação de texto
-    { text: '**Texto em negrito**', sender: Sender.Bot },
-    { text: '*Texto em itálico*', sender: Sender.Bot },
-    { text: '~~Texto riscado~~', sender: Sender.Bot },
-    { text: '> Citação em bloco', sender: Sender.Bot },
-    { text: '[Link para o Google](https://www.google.com)', sender: Sender.Bot },
-    { text: '# Título', sender: Sender.Bot },
-    { text: '## Subtítulo', sender: Sender.Bot },
-
-    // Nível 3: Mensagens de bullet points
-    { text: '### Lista de Bullet Points\n\n- Bullet point 1\n- Bullet point 2\n- Bullet point 3', sender: Sender.Bot },
-
-    // Nível 4: Mensagens de tabelas
-    { text: '### Tabela de Exemplo\n| Cabeçalho 1 | Cabeçalho 2 |\n|-------------|-------------|\n| Celula 1    | Celula 2    |\n| Celula 3    | Celula 4    |', sender: Sender.Bot },
-
-    // Mensagens adicionais se necessário
-    { text: '1. Item 1\n2. Item 2\n3. Item 3', sender: Sender.Bot },
-  ]);
-
-  const [isStreaming, setIsStreaming] = useState(false);
+  const { messages, addMessage } = useMessageManager();
+  const [message, setMessage] = React.useState('');
+  const [isStreaming, setIsStreaming] = React.useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -45,7 +22,7 @@ const ChatPage: React.FC = () => {
   const sendMessage = () => {
     if (message.trim()) {
       console.log('Mensagem enviada:', message);
-      setMessages((prevMessages) => [...prevMessages, { text: message, sender: Sender.User }]);
+      addMessage(message, Sender.User); // Adiciona a mensagem usando o hook useMessageManager
       setMessage('');
       setIsStreaming(true);
       // Simulate streaming for 5 seconds
@@ -98,7 +75,7 @@ const ChatPage: React.FC = () => {
 
   return (
     <div className="flex flex-col relative max-w-3xl mx-auto" style={{ height: 'calc(100vh - 5rem)' }}>
-      <MessageList messages={messages} />
+      <MessageList messages={messages} /> {/* Usa as mensagens do hook useMessageManager */}
       <form className="flex items-end gap-2 px-4 xl:px-0 py-4 md:py-4" onSubmit={handleSubmit}>
         <div className="flex-grow flex items-center">
           <textarea
