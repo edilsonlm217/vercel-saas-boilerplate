@@ -13,10 +13,10 @@ type MessageItemProps = {
 const MessageItem: React.FC<MessageItemProps> = ({ message }) => (
   <div
     className={clsx(
-      'mb-2 p-2 rounded-lg max-w-[75%]',
+      'mb-2 p-2 rounded-lg',
       {
-        'text-white bg-gray-900 self-end ml-auto': message.sender === Sender.User,
-        'text-white bg-gray-950 self-start': message.sender === Sender.Bot,
+        'text-white bg-gray-900 self-end ml-auto max-w-[75%]': message.sender === Sender.User,
+        'self-start w-full': message.sender === Sender.Bot,
       },
       'whitespace-pre-wrap break-words'
     )}
