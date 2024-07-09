@@ -1,7 +1,7 @@
 import React from 'react';
-import remarkGfm from 'remark-gfm';
-import ReactMarkdown from 'react-markdown';
 import clsx from 'clsx';
+
+import MarkdownMessage from './MarkdownMessage';
 
 import { Message } from '../types/message.types';
 import { Sender } from '../types/sender.enum';
@@ -21,10 +21,8 @@ const MessageItem: React.FC<MessageItemProps> = ({ message }) => (
       'whitespace-pre-wrap break-words'
     )}
   >
-    {message.sender === 'bot' ? (
-      <ReactMarkdown remarkPlugins={[remarkGfm]}>
-        {message.text}
-      </ReactMarkdown>
+    {message.sender === Sender.Bot ? (
+      <MarkdownMessage text={message.text} />
     ) : (
       message.text
     )}
