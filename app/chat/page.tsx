@@ -2,12 +2,14 @@
 
 import React, { useState } from 'react';
 import { Send, Square } from 'lucide-react';
-import { Button } from '@/components/shadcn/ui/button';
 
 import MessageList from './components/MessageList';
-import useMessageManager from './hooks/useMessageManager';
-import { Sender } from './types/sender.enum';
+import { Button } from '@/components/shadcn/ui/button';
 import ResizableTextarea from './components/ResizableTextarea';
+
+import useMessageManager from './hooks/useMessageManager';
+
+import { Sender } from './types/sender.enum';
 
 const ChatPage: React.FC = () => {
   const { messages, addMessage } = useMessageManager();
@@ -22,7 +24,7 @@ const ChatPage: React.FC = () => {
   const sendMessage = () => {
     if (message.trim()) {
       console.log('Mensagem enviada:', message);
-      addMessage(message, Sender.User); // Adiciona a mensagem usando o hook useMessageManager
+      addMessage(message, Sender.User);
       setMessage('');
       setIsStreaming(true);
       // Simulate streaming for 5 seconds
@@ -43,7 +45,7 @@ const ChatPage: React.FC = () => {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault(); // Evita o comportamento padrão de enviar o formulário
+      e.preventDefault();
 
       if (!isStreaming) {
         sendMessage(); // Envia a mensagem apenas se não estiver em streaming
@@ -55,7 +57,7 @@ const ChatPage: React.FC = () => {
 
   return (
     <div className="flex flex-col relative max-w-3xl mx-auto" style={{ height: 'calc(100vh - 5rem)' }}>
-      <MessageList messages={messages} /> {/* Usa as mensagens do hook useMessageManager */}
+      <MessageList messages={messages} />
       <form className="flex items-end gap-2 px-4 xl:px-0 py-4 md:py-4" onSubmit={handleSubmit}>
         <div className="flex-grow flex items-center">
           <ResizableTextarea
