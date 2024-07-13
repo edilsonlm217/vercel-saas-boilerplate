@@ -1,5 +1,8 @@
 import { useState, useCallback } from 'react';
+
 import useMessageManager from '../hooks/useMessageManager';
+import useAgentExecutor from './useAgentExecutor';
+
 import { Sender } from '../types/sender.enum';
 
 /**
@@ -19,6 +22,7 @@ const useChat = () => {
   const { messages, addMessage } = useMessageManager();
   const [message, setMessage] = useState('');
   const [isStreaming, setIsStreaming] = useState(false);
+  const { sendMessage: sendAgentMessage } = useAgentExecutor();
 
   /**
    * Sends the current message if it is not empty.
@@ -29,12 +33,18 @@ const useChat = () => {
       addMessage(trimmedMessage, Sender.User);
       setMessage('');
       setIsStreaming(true);
-      // Simulate streaming for 5 seconds
-      setTimeout(() => {
-        setIsStreaming(false);
-      }, 5000);
+      sendAgentMessage(trimmedMessage)
+        .then(agentResponse => {
+          addMessage(agentResponse, Sender.Bot);
+        })
+        .catch(error => {
+          console.error('Error sending message to agent:', error);
+        })
+        .finally(() => {
+          setIsStreaming(false);
+        });
     }
-  }, [message, addMessage]);
+  }, [message, addMessage, sendAgentMessage]);
 
   /**
    * Handler for input change event.
