@@ -9,6 +9,8 @@ import ChatForm from './components/ChatForm';
 import MessageList from './components/MessageList';
 import ResizableTextarea from './components/ResizableTextarea';
 
+import clsx from 'clsx';
+
 import useChat from './hooks/useChat';
 
 const ChatPage: React.FC = () => {
@@ -46,12 +48,19 @@ const ChatPage: React.FC = () => {
             type="submit"
             variant="default"
             size="icon"
-            className={`${isMessageEmpty && !isStreaming ? 'bg-gray-600' : 'bg-gray-500 hover:bg-gray-400'} text-white`}
+            className={clsx(
+              'text-white',
+              {
+                'bg-gray-600': isMessageEmpty && !isStreaming,
+                'bg-gray-500 hover:bg-gray-400': !isMessageEmpty || isStreaming
+              }
+            )}
             disabled={isMessageEmpty && !isStreaming}
             onClick={isStreaming ? handleStop : undefined}
           >
             {isStreaming ? <Square className="h-4 w-4" /> : <Send className="h-4 w-4" />}
           </Button>
+
         </div>
       </ChatForm>
     </ChatContainer>
