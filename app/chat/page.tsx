@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import MessageList from './components/MessageList';
 import useChat from './hooks/useChat';
 import ResizableTextarea from './components/ResizableTextarea';
@@ -8,7 +8,6 @@ import { Button } from '@/components/shadcn/ui/button';
 import { Send, Square } from 'lucide-react';
 
 const ChatPage: React.FC = () => {
-  const [isStreaming, setIsStreaming] = useState(false);
   const {
     messages,
     message,
@@ -16,6 +15,8 @@ const ChatPage: React.FC = () => {
     handleKeyDown,
     sendMessage,
     isMessageEmpty,
+    isStreaming,
+    handleStop,
   } = useChat();
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -23,13 +24,8 @@ const ChatPage: React.FC = () => {
     sendMessage();
   };
 
-  const handleStop = () => {
-    setIsStreaming(false);
-    console.log('Streaming stopped');
-  };
-
   return (
-    <div className="flex flex-col relative max-w-3xl mx-auto" style={{ height: 'calc(100vh - 5rem)' }}>
+    <div className="flex flex-col relative max-w-3xl mx-auto h-[calc(100vh-5rem)]">
       <MessageList messages={messages} />
       <form className="flex items-end gap-2 px-4 xl:px-0 py-4 md:py-4" onSubmit={handleSubmit}>
         <div className="flex-grow flex items-center">
@@ -46,6 +42,7 @@ const ChatPage: React.FC = () => {
             type="submit"
             variant="default"
             size="icon"
+            className={`${isMessageEmpty && !isStreaming ? 'bg-gray-600' : 'bg-gray-500 hover:bg-gray-400'} text-white`}
             disabled={isMessageEmpty && !isStreaming}
             onClick={isStreaming ? handleStop : undefined}
           >
