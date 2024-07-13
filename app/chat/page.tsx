@@ -1,11 +1,15 @@
 'use client';
 
-import React from 'react';
-import MessageList from './components/MessageList';
-import useChat from './hooks/useChat';
-import ResizableTextarea from './components/ResizableTextarea';
 import { Button } from '@/components/shadcn/ui/button';
+
 import { Send, Square } from 'lucide-react';
+
+import ChatContainer from './components/ChatConatiner';
+import ChatForm from './components/ChatForm';
+import MessageList from './components/MessageList';
+import ResizableTextarea from './components/ResizableTextarea';
+
+import useChat from './hooks/useChat';
 
 const ChatPage: React.FC = () => {
   const {
@@ -25,9 +29,9 @@ const ChatPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col relative max-w-3xl mx-auto h-[calc(100vh-5rem)]">
+    <ChatContainer>
       <MessageList messages={messages} />
-      <form className="flex items-end gap-2 px-4 xl:px-0 py-4 md:py-4" onSubmit={handleSubmit}>
+      <ChatForm handleSubmit={handleSubmit}>
         <div className="flex-grow flex items-center">
           <ResizableTextarea
             value={message}
@@ -49,8 +53,8 @@ const ChatPage: React.FC = () => {
             {isStreaming ? <Square className="h-4 w-4" /> : <Send className="h-4 w-4" />}
           </Button>
         </div>
-      </form>
-    </div>
+      </ChatForm>
+    </ChatContainer>
   );
 };
 
