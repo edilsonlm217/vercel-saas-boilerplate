@@ -1,6 +1,8 @@
 import React, { useRef, useEffect } from 'react';
+import clsx from 'clsx';
 
 const ResizableTextarea: React.FC<React.TextareaHTMLAttributes<HTMLTextAreaElement>> = ({
+  className,
   ...restProps
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -23,11 +25,17 @@ const ResizableTextarea: React.FC<React.TextareaHTMLAttributes<HTMLTextAreaEleme
     adjustTextareaHeight();
   }, [restProps.value]);
 
+  const combinedClassName = clsx(
+    'w-full resize-none rounded-lg px-3 py-2',
+    className
+  );
+
   return (
     <textarea
       {...restProps}
       ref={textareaRef}
       rows={1}
+      className={combinedClassName}
     />
   );
 };
