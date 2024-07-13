@@ -33,7 +33,7 @@ const ChatPage: React.FC = () => {
   return (
     <ChatContainer>
       <MessageList messages={messages} />
-      <ChatForm handleSubmit={handleSubmit}>
+      <ChatForm onSubmit={handleSubmit}>
         <div className="flex-grow flex items-center">
           <ResizableTextarea
             value={message}
