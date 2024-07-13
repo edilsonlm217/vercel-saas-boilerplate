@@ -12,10 +12,13 @@ import { Sender } from '../types/sender.enum';
  * @property {function} handleKeyDown - Handler for key down event.
  * @property {function} sendMessage - Function to send the current message.
  * @property {boolean} isMessageEmpty - Boolean indicating if the current message is empty after trimming.
+ * @property {boolean} isStreaming - Boolean indicating if the message is being streamed.
+ * @property {function} handleStop - Function to stop streaming.
  */
 const useChat = () => {
   const { messages, addMessage } = useMessageManager();
   const [message, setMessage] = useState('');
+  const [isStreaming, setIsStreaming] = useState(false);
 
   /**
    * Sends the current message if it is not empty.
@@ -25,6 +28,11 @@ const useChat = () => {
     if (trimmedMessage) {
       addMessage(trimmedMessage, Sender.User);
       setMessage('');
+      setIsStreaming(true);
+      // Simulate streaming for 5 seconds
+      setTimeout(() => {
+        setIsStreaming(false);
+      }, 5000);
     }
   }, [message, addMessage]);
 
@@ -47,6 +55,11 @@ const useChat = () => {
     }
   }, [sendMessage]);
 
+  const handleStop = useCallback(() => {
+    setIsStreaming(false);
+    console.log('Streaming stopped');
+  }, []);
+
   const isMessageEmpty = message.trim().length === 0;
 
   return {
@@ -56,6 +69,8 @@ const useChat = () => {
     handleKeyDown,
     sendMessage,
     isMessageEmpty,
+    isStreaming,
+    handleStop,
   };
 };
 
