@@ -4,6 +4,18 @@ import useMessageManager from '../hooks/useMessageManager';
 import useAgentExecutor from './useAgentExecutor';
 
 import { Sender } from '../types/sender.enum';
+import { Message } from '../types/message.types';
+
+interface ChatHook {
+  messages: Message[];
+  message: string;
+  handleInput: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  handleKeyDown: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
+  sendMessage: () => void;
+  isMessageEmpty: boolean;
+  isStreaming: boolean;
+  handleStop: () => void;
+}
 
 /**
  * Custom hook for chat functionality.
@@ -18,7 +30,7 @@ import { Sender } from '../types/sender.enum';
  * @property {boolean} isStreaming - Boolean indicating if the message is being streamed.
  * @property {function} handleStop - Function to stop streaming.
  */
-const useChat = () => {
+const useChat = (): ChatHook => {
   const { messages, addMessage } = useMessageManager();
   const [message, setMessage] = useState('');
   const [isStreaming, setIsStreaming] = useState(false);
