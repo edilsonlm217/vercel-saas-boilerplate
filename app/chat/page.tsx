@@ -1,58 +1,30 @@
 'use client';
 
 import React, { useState } from 'react';
+import MessageList from './components/MessageList';
+import useChat from './hooks/useChat';
+import ResizableTextarea from './components/ResizableTextarea';
+import { Button } from '@/components/shadcn/ui/button';
 import { Send, Square } from 'lucide-react';
 
-import MessageList from './components/MessageList';
-import { Button } from '@/components/shadcn/ui/button';
-import ResizableTextarea from './components/ResizableTextarea';
-
-import useMessageManager from './hooks/useMessageManager';
-
-import { Sender } from './types/sender.enum';
-
 const ChatPage: React.FC = () => {
-  const { messages, addMessage } = useMessageManager();
-  const [message, setMessage] = useState('');
   const [isStreaming, setIsStreaming] = useState(false);
+  const {
+    messages,
+    message,
+    handleInput,
+    handleKeyDown,
+    sendMessage,
+  } = useChat();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     sendMessage();
   };
 
-  const sendMessage = () => {
-    if (message.trim()) {
-      console.log('Mensagem enviada:', message);
-      addMessage(message, Sender.User);
-      setMessage('');
-      setIsStreaming(true);
-      // Simulate streaming for 5 seconds
-      setTimeout(() => {
-        setIsStreaming(false);
-      }, 5000);
-    }
-  };
-
-  const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setMessage(e.target.value);
-  };
-
   const handleStop = () => {
     setIsStreaming(false);
     console.log('Streaming stopped');
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-
-      if (!isStreaming) {
-        sendMessage(); // Envia a mensagem apenas se não estiver em streaming
-      } else {
-        setMessage((prevMessage) => prevMessage + '\n'); // Quebra linha se estiver em streaming
-      }
-    }
   };
 
   return (
