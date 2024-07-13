@@ -15,6 +15,7 @@ const ChatPage: React.FC = () => {
     handleInput,
     handleKeyDown,
     sendMessage,
+    isMessageEmpty,
   } = useChat();
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -45,8 +46,7 @@ const ChatPage: React.FC = () => {
             type="submit"
             variant="default"
             size="icon"
-            className={`${!message.trim() && !isStreaming ? 'bg-gray-600' : 'bg-gray-500 hover:bg-gray-400'} text-white`}
-            disabled={!message.trim() && !isStreaming}
+            disabled={isMessageEmpty && !isStreaming}
             onClick={isStreaming ? handleStop : undefined}
           >
             {isStreaming ? <Square className="h-4 w-4" /> : <Send className="h-4 w-4" />}
