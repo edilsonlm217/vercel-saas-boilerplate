@@ -51,9 +51,13 @@ const useChat = () => {
   const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      sendMessage();
+      if (!isStreaming) {
+        sendMessage();
+      } else {
+        setMessage((prevMessage) => prevMessage + '\n');
+      }
     }
-  }, [sendMessage]);
+  }, [sendMessage, isStreaming]);
 
   const handleStop = useCallback(() => {
     setIsStreaming(false);
