@@ -65,7 +65,7 @@ const ChatPage: React.FC = () => {
             onChange={handleInput}
             onKeyDown={handleKeyDown}
             placeholder="Digite sua mensagem..."
-            className="resize-none min-h-auto max-h-160 overflow-hidden w-full px-3 py-2 rounded-lg bg-zinc-950 text-white focus:outline-none focus:ring-2 focus:ring-gray-500"
+            className="min-h-auto max-h-160 overflow-hidden bg-zinc-950 text-white focus:outline-none focus:ring-2 focus:ring-gray-500"
           />
         </div>
         <div className="flex items-end">
