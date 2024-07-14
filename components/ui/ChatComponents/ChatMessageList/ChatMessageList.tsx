@@ -1,10 +1,8 @@
 import React, { useRef } from 'react';
-import useScrollToBottom from './hook/useScrollToBottom';
-
-import { Message } from '@/types/message.types';
-
-import ChatMessage from "../ChatMessage";
+import useScrollToBottom from '@/hooks/useScrollToBottom';
 import ScrollButton from '@/components/ui/ScrollButton';
+import ChatMessage from "@/components/ui/ChatComponents/ChatMessage";
+import { Message } from '@/types/message.types';
 
 interface ChatMessageListProps {
   messages: Message[];
