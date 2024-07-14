@@ -1,17 +1,14 @@
-'use client';
-
-import { Button } from '@/components/ui/button';
-
-import { Send, Square } from 'lucide-react';
-
-import ChatContainer from './components/ChatConatiner';
-import ChatForm from './components/ChatForm';
-import ChatMessageList from './components/ChatMessageList';
-import ResizableTextarea from './components/ResizableTextarea';
-
-import clsx from 'clsx';
+import React from 'react';
 
 import useChat from './hooks/useChat';
+
+import {
+  ChatForm,
+  ChatInput,
+  ChatContainer,
+  ChatMessageList,
+  ChatSubmitButton
+} from './components';
 
 const ChatPage: React.FC = () => {
   const {
@@ -34,34 +31,17 @@ const ChatPage: React.FC = () => {
     <ChatContainer>
       <ChatMessageList messages={messages} />
       <ChatForm onSubmit={handleSubmit}>
-        <div className="flex-grow flex items-center">
-          <ResizableTextarea
-            value={message}
-            onChange={handleInput}
-            onKeyDown={handleKeyDown}
-            placeholder="Digite sua mensagem..."
-            className="min-h-auto max-h-160 overflow-hidden bg-zinc-950 text-white focus:outline-none focus:ring-2 focus:ring-gray-500"
-          />
-        </div>
-        <div className="flex items-end">
-          <Button
-            type="submit"
-            variant="default"
-            size="icon"
-            className={clsx(
-              'text-white',
-              {
-                'bg-gray-600': isMessageEmpty && !isStreaming,
-                'bg-gray-500 hover:bg-gray-400': !isMessageEmpty || isStreaming
-              }
-            )}
-            disabled={isMessageEmpty && !isStreaming}
-            onClick={isStreaming ? handleStop : undefined}
-          >
-            {isStreaming ? <Square className="h-4 w-4" /> : <Send className="h-4 w-4" />}
-          </Button>
-
-        </div>
+        <ChatInput
+          value={message}
+          onChange={handleInput}
+          onKeyDown={handleKeyDown}
+        />
+        <ChatSubmitButton
+          isMessageEmpty={isMessageEmpty}
+          isStreaming={isStreaming}
+          sendMessage={sendMessage}
+          handleStop={handleStop}
+        />
       </ChatForm>
     </ChatContainer>
   );
