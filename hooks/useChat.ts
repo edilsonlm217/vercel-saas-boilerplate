@@ -1,10 +1,21 @@
 import { useState, useCallback } from 'react';
 
-import useMessageManager from '../hooks/useMessageManager';
+import useMessageManager from './useMessageManager';
 import useAgentExecutor from './useAgentExecutor';
 
-import { Sender } from '../types/sender.enum';
-import { ChatHook } from '../types/chat.hook.interface';
+import { Sender } from '@/types/sender.enum';
+import { Message } from '@/types/message.types';
+
+export interface ChatHook {
+  messages: Message[];
+  message: string;
+  handleInput: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  handleKeyDown: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
+  sendMessage: () => void;
+  isMessageEmpty: boolean;
+  isStreaming: boolean;
+  handleStop: () => void;
+}
 
 const useChat = (): ChatHook => {
   const { messages, addMessage } = useMessageManager();

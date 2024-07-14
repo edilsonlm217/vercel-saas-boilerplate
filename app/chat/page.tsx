@@ -1,6 +1,6 @@
 'use client';
 
-import useChat from './hooks/useChat';
+import useChat from '@/hooks/useChat';
 
 import {
   ChatForm,
@@ -8,7 +8,7 @@ import {
   ChatContainer,
   ChatMessageList,
   ChatSubmitButton
-} from './components';
+} from '@/components/ui/ChatComponents';
 
 const ChatPage: React.FC = () => {
   const {

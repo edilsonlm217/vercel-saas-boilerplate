@@ -1,4 +1,4 @@
-import { Message } from '../../../types/message.types';
+import { Message } from '@/types/message.types';
 import { useEffect, useState } from 'react';
 
 const useScrollToBottom = (scrollContainerRef: React.RefObject<HTMLDivElement>, messages: Message[]) => {

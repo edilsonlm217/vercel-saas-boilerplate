@@ -3,8 +3,8 @@ import React from 'react';
 import UserMessage from './UserMessage';
 import BotMessage from './BotMessage';
 
-import { Message } from '../../types/message.types';
-import { Sender } from '../../types/sender.enum';
+import { Message } from '@/types/message.types';
+import { Sender } from '@/types/sender.enum';
 
 type ChatMessageProps = {
   message: Message;

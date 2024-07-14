@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { AgentExecutor } from "langchain/agents";
-import { createAgentExecutor } from '../utils/agentSetup';
+import { createAgentExecutor } from '@/utils/financial-agent/agentSetup';
 
 interface AgentExecutorHook {
   sendMessage: (message: string) => Promise<string>;

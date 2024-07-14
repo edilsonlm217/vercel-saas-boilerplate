@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import useScrollToBottom from './hook/useScrollToBottom';
 
-import { Message } from '../../types/message.types';
+import { Message } from '@/types/message.types';
 
 import ChatMessage from "../ChatMessage";
 import ScrollButton from '@/components/ui/ScrollButton';
