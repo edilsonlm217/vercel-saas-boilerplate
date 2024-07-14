@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/components/ui/shadcn/button';
+import { Button } from '@/components/ui/button';
 
 import { Send, Square } from 'lucide-react';
 
