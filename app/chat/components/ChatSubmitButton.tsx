@@ -1,13 +1,21 @@
-import { Button } from "@/components/ui/button";
 import clsx from "clsx";
 import { Send, Square } from "lucide-react";
 
-const ChatSubmitButton: React.FC<{
+import { Button } from "@/components/ui/button";
+
+interface ChatSubmitButtonProps {
   isMessageEmpty: boolean;
   isStreaming: boolean;
   sendMessage: () => void;
   handleStop: () => void;
-}> = ({ isMessageEmpty, isStreaming, sendMessage, handleStop }) => (
+}
+
+const ChatSubmitButton: React.FC<ChatSubmitButtonProps> = ({
+  isMessageEmpty,
+  isStreaming,
+  sendMessage,
+  handleStop
+}) => (
   <div className="flex items-end">
     <Button
       type="submit"
