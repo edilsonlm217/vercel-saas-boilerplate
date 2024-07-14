@@ -1,10 +1,13 @@
-import ResizableTextarea from "@/components/ui/ResizableTextarea";
+import React from 'react';
+import ResizableTextarea from '@/components/ui/ResizableTextarea';
 
-const ChatInput: React.FC<{
+interface ChatInputProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onKeyDown: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
-}> = ({ value, onChange, onKeyDown }) => (
+}
+
+const ChatInput: React.FC<ChatInputProps> = ({ value, onChange, onKeyDown }) => (
   <div className="flex-grow flex items-center">
     <ResizableTextarea
       value={value}
@@ -16,4 +19,4 @@ const ChatInput: React.FC<{
   </div>
 );
 
-export default ChatInput
+export default ChatInput;
