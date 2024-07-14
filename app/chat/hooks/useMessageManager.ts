@@ -8,10 +8,7 @@ type UseMessageManagerReturn = {
 };
 
 const useMessageManager = (): UseMessageManagerReturn => {
-  const [messages, setMessages] = useState<Message[]>([
-    { sender: Sender.Bot, text: 'Olá, como posso ajudar?' },
-    { sender: Sender.User, text: 'Oi, preciso comprar um celular' },
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
 
   const addMessage = (message: string, sender: Sender) => {
     setMessages(prevMessages => [...prevMessages, { text: message, sender }]);
