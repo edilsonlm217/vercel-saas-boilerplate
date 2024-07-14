@@ -15,8 +15,8 @@ const useScrollToBottom = (scrollContainerRef: React.RefObject<HTMLDivElement>, 
 
   const handleScroll = () => {
     if (scrollContainerRef.current) {
-      const { scrollTop, clientHeight, scrollHeight } = scrollContainerRef.current;
-      const isAtBottom = scrollTop + clientHeight >= scrollHeight - 10;
+      const { scrollTop } = scrollContainerRef.current;
+      const isAtBottom = scrollTop >= -10;
       setShowScrollButton(!isAtBottom);
     }
   };
