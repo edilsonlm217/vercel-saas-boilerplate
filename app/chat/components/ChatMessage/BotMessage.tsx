@@ -4,14 +4,14 @@ import ReactMarkdown from 'react-markdown';
 
 import styles from './MarkdownMessage.module.css';
 
-type MarkdownMessageProps = {
+type BotMessageProps = {
   text: string;
 };
 
-const MarkdownMessage: React.FC<MarkdownMessageProps> = ({ text }) => (
+const BotMessage: React.FC<BotMessageProps> = ({ text }) => (
   <ReactMarkdown className={styles.markdownBody} remarkPlugins={[remarkGfm]}>
     {text}
   </ReactMarkdown>
 );
 
-export default MarkdownMessage;
+export default BotMessage;

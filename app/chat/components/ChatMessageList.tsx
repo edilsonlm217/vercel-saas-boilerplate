@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
-import MessageItem from './MessageItem';
+import ChatMessage from './ChatMessage/ChatMessage';
 
 import { Message } from '../types/message.types';
 import { ArrowDown } from 'lucide-react';
 
-interface MessageListProps {
+interface ChatMessageListProps {
   messages: Message[];
 }
 
-const MessageList: React.FC<MessageListProps> = ({ messages }) => {
+const ChatMessageList: React.FC<ChatMessageListProps> = ({ messages }) => {
   const [showScrollButton, setShowScrollButton] = useState(false);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
 
@@ -48,7 +48,7 @@ const MessageList: React.FC<MessageListProps> = ({ messages }) => {
     <>
       <div ref={messagesContainerRef} className="flex-grow overflow-y-auto px-4 xl:px-0 py-4 md:py-4 bg-black-900 flex flex-col-reverse">
         {messages.slice(0).reverse().map((msg, index) => (
-          <MessageItem key={index} message={msg} />
+          <ChatMessage key={index} message={msg} />
         ))}
       </div>
       {showScrollButton && (
@@ -63,4 +63,4 @@ const MessageList: React.FC<MessageListProps> = ({ messages }) => {
   );
 };
 
-export default MessageList;
+export default ChatMessageList;
