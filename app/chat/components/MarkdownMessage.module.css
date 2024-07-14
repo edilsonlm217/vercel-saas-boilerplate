@@ -6,7 +6,7 @@
 
   /* Ajuste para remover espaçamento entre elementos */
   > * {
-    margin-bottom: -1em; /* Ajuste o valor conforme necessário */
+    margin-bottom: -0.5em; /* Ajuste o valor conforme necessário */
   }
 }
 
@@ -33,4 +33,21 @@
 
 .markdownBody h3 {
   font-size: 1.2em; /* Tamanho da fonte para h3 */
+}
+
+/* Estilos para listas */
+.markdownBody ul,
+.markdownBody ol {
+  margin: -20px; /* Remove margens padrão */
+  padding: 0; /* Remove preenchimento padrão */
+  list-style-position: inside; /* Ajusta a posição do marcador */
+  padding-left: 1.5em; /* Ajusta preenchimento à esquerda para alinhamento */
+}
+
+.markdownBody ul li,
+.markdownBody ol li {
+  margin: 0; /* Remove margens padrão dos itens da lista */
+  padding: 0; /* Remove preenchimento padrão dos itens da lista */
+  line-height: 1.5; /* Ajusta a altura da linha conforme necessário */
+  list-style: auto;
 }
