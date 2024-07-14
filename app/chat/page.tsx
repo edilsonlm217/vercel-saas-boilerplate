@@ -6,7 +6,7 @@ import { Send, Square } from 'lucide-react';
 
 import ChatContainer from './components/ChatConatiner';
 import ChatForm from './components/ChatForm';
-import MessageList from './components/MessageList';
+import ChatMessageList from './components/ChatMessageList';
 import ResizableTextarea from './components/ResizableTextarea';
 
 import clsx from 'clsx';
@@ -32,7 +32,7 @@ const ChatPage: React.FC = () => {
 
   return (
     <ChatContainer>
-      <MessageList messages={messages} />
+      <ChatMessageList messages={messages} />
       <ChatForm onSubmit={handleSubmit}>
         <div className="flex-grow flex items-center">
           <ResizableTextarea
