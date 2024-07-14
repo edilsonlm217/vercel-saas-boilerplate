@@ -1,125 +1,13 @@
-.markdownBody h1 {
-  font-size: 1.5rem; /* Tamanho reduzido */
-  font-weight: bold;
-  margin-top: 0.75rem;
-  margin-bottom: 0.5rem;
-}
+/* MarkdownMessage.module.css */
 
-.markdownBody h2 {
-  font-size: 1.25rem; /* Tamanho reduzido */
-  font-weight: bold;
-  margin-top: 0.75rem;
-  margin-bottom: 0.5rem;
-}
+.markdownBody {
+  /* Reset geral */
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
 
-.markdownBody h3 {
-  font-size: 1rem; /* Tamanho reduzido */
-  font-weight: bold;
-  margin-top: 0.75rem;
-  margin-bottom: 0.5rem;
-}
-
-.markdownBody h4 {
-  font-size: 0.875rem; /* Tamanho reduzido */
-  font-weight: bold;
-  margin-top: 0.75rem;
-  margin-bottom: 0.5rem;
-}
-
-.markdownBody h5 {
-  font-size: 0.75rem; /* Tamanho reduzido */
-  font-weight: bold;
-  margin-top: 0.75rem;
-  margin-bottom: 0.5rem;
-}
-
-.markdownBody h6 {
-  font-size: 0.675rem; /* Tamanho reduzido */
-  font-weight: bold;
-  margin-top: 0.75rem;
-  margin-bottom: 0.5rem;
-}
-
-.markdownBody p {
-  margin-top: 0.25rem;
-  margin-bottom: 0.25rem;
-}
-
-.markdownBody ul,
-.markdownBody ol {
-  margin-top: 0;
-  margin-bottom: 0;
-  padding-left: 1.5rem;
-  /* Ajuste conforme necessário */
-  list-style-type: disc;
-  /* Ajuste para 'outside' se preferir */
-}
-
-.markdownBody li {
-  margin-top: 0.25rem;
-  /* Ajuste conforme necessário */
-  margin-bottom: 0.25rem;
-  /* Ajuste conforme necessário */
-}
-
-.markdownBody table {
-  width: 100%;
-  border-collapse: collapse; /* Permitir colapsar bordas */
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  border-radius: 8px; /* Bordas arredondadas */
-  overflow: hidden; /* Para garantir que as bordas arredondadas sejam aplicadas */
-  background-color: transparent; /* Transparente para fundo negro */
-  color: #e0e0e0; /* Cor do texto da tabela */
-}
-
-.markdownBody th,
-.markdownBody td {
-  padding: 0.3rem 0.5rem; /* Espaçamento interno menor */
-  border: 1px solid #444; /* Bordas finas para células */
-}
-
-.markdownBody th {
-  background-color: #333; /* Cor de fundo para o cabeçalho */
-  font-weight: bold;
-  text-align: left;
-}
-
-.markdownBody tr:nth-child(even) {
-  background-color: transparent; /* Transparente para fundo negro */
-}
-
-.markdownBody tr:nth-child(odd) {
-  background-color: transparent; /* Transparente para fundo negro */
-}
-
-.markdownBody a {
-  color: #1e90ff;
-  text-decoration: underline;
-}
-
-.markdownBody img {
-  max-width: 100%;
-  height: auto;
-}
-
-.markdownBody code {
-  background-color: #333;
-  color: #fff;
-  padding: 2px 4px;
-  border-radius: 4px;
-}
-
-.markdownBody pre {
-  background-color: #333;
-  color: #fff;
-  padding: 10px;
-  border-radius: 4px;
-  overflow: auto;
-}
-
-.markdownBody blockquote {
-  border-left: 4px solid #ccc;
-  padding-left: 10px;
-  color: #ccc;
+  /* Ajuste para remover espaçamento entre elementos */
+  > * {
+    margin-bottom: -0.5em; /* Ajuste o valor conforme necessário */
+  }
 }
