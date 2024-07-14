@@ -2,7 +2,7 @@ import React from 'react';
 import remarkGfm from 'remark-gfm';
 import ReactMarkdown from 'react-markdown';
 
-import styles from '../MarkdownMessage.module.css';
+import styles from '@/styles/markdown.module.css';
 
 type BotMessageProps = {
   text: string;
