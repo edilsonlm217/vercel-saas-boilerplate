@@ -38,10 +38,11 @@
 /* Estilos para listas */
 .markdownBody ul,
 .markdownBody ol {
-  margin: -20px; /* Remove margens padrão */
+  margin-top: -20px;
+  margin-bottom: -20px; /* Remove margens padrão */
   padding: 0; /* Remove preenchimento padrão */
   list-style-position: inside; /* Ajusta a posição do marcador */
-  padding-left: 3.5em; /* Ajusta preenchimento à esquerda para alinhamento */
+  padding-left: 2.5em; /* Ajusta preenchimento à esquerda para alinhamento */
 }
 
 .markdownBody ul li,
