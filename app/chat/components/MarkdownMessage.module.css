@@ -24,15 +24,15 @@
 
 /* Estilos específicos para cada tipo de cabeçalho */
 .markdownBody h1 {
-  font-size: 2em; /* Tamanho da fonte para h1 */
+  font-size: 1.5em; /* Tamanho reduzido para h1 */
 }
 
 .markdownBody h2 {
-  font-size: 1.5em; /* Tamanho da fonte para h2 */
+  font-size: 1.2em; /* Tamanho reduzido para h2 */
 }
 
 .markdownBody h3 {
-  font-size: 1.2em; /* Tamanho da fonte para h3 */
+  font-size: 1em; /* Tamanho reduzido para h3 */
 }
 
 /* Estilos para listas */
@@ -41,13 +41,12 @@
   margin: -20px; /* Remove margens padrão */
   padding: 0; /* Remove preenchimento padrão */
   list-style-position: inside; /* Ajusta a posição do marcador */
-  padding-left: 1.5em; /* Ajusta preenchimento à esquerda para alinhamento */
+  padding-left: 3.5em; /* Ajusta preenchimento à esquerda para alinhamento */
 }
 
 .markdownBody ul li,
 .markdownBody ol li {
   margin: 0; /* Remove margens padrão dos itens da lista */
-  padding: 0; /* Remove preenchimento padrão dos itens da lista */
   line-height: 1.5; /* Ajusta a altura da linha conforme necessário */
   list-style: auto;
 }
