@@ -1,5 +1,3 @@
-/* MarkdownMessage.module.css */
-
 .markdownBody {
   /* Reset geral */
   margin: 0;
@@ -8,6 +6,31 @@
 
   /* Ajuste para remover espaçamento entre elementos */
   > * {
-    margin-bottom: -0.5em; /* Ajuste o valor conforme necessário */
+    margin-bottom: -1em; /* Ajuste o valor conforme necessário */
   }
+}
+
+/* Estilos para cabeçalhos */
+.markdownBody h1,
+.markdownBody h2,
+.markdownBody h3,
+.markdownBody h4,
+.markdownBody h5,
+.markdownBody h6 {
+  margin-top: 0; /* Remove margem superior */
+  font-weight: bold; /* Define peso da fonte */
+  color: #FFFFFF; /* Define cor do texto */
+}
+
+/* Estilos específicos para cada tipo de cabeçalho */
+.markdownBody h1 {
+  font-size: 2em; /* Tamanho da fonte para h1 */
+}
+
+.markdownBody h2 {
+  font-size: 1.5em; /* Tamanho da fonte para h2 */
+}
+
+.markdownBody h3 {
+  font-size: 1.2em; /* Tamanho da fonte para h3 */
 }
