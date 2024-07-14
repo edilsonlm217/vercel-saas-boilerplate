@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
-import ChatMessage from './ChatMessage/ChatMessage';
+import { ArrowDown } from 'lucide-react';
+
+import ChatMessage from "./ChatMessage"
 
 import { Message } from '../types/message.types';
-import { ArrowDown } from 'lucide-react';
 
 interface ChatMessageListProps {
   messages: Message[];
