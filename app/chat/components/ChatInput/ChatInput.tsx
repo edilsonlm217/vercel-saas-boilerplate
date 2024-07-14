@@ -1,4 +1,4 @@
-import ResizableTextarea from "./ResizableTextarea";
+import ResizableTextarea from "@/components/ui/ResizableTextarea";
 
 const ChatInput: React.FC<{
   value: string;
