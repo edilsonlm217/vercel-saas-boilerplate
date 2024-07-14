@@ -9,9 +9,11 @@ type BotMessageProps = {
 };
 
 const BotMessage: React.FC<BotMessageProps> = ({ text }) => (
-  <ReactMarkdown className={styles.markdownBody} remarkPlugins={[remarkGfm]}>
-    {text}
-  </ReactMarkdown>
+  <div className='whitespace-pre-wrap break-words mb-2 p-2 rounded-lg self-start w-full'>
+    <ReactMarkdown className={styles.markdownBody} remarkPlugins={[remarkGfm]}>
+      {text}
+    </ReactMarkdown>
+  </div >
 );
 
 export default BotMessage;

@@ -1,5 +1,4 @@
 import React from 'react';
-import clsx from 'clsx';
 
 import UserMessage from './UserMessage';
 import BotMessage from './BotMessage';
@@ -12,13 +11,12 @@ type ChatMessageProps = {
 };
 
 const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => (
-  <div className={clsx('whitespace-pre-wrap break-words')}>
-    {message.sender === Sender.Bot ? (
-      <BotMessage text={message.text} />
-    ) : (
-      <UserMessage text={message.text} />
-    )}
-  </div>
+  <>
+    {message.sender === Sender.Bot
+      ? <BotMessage text={message.text} />
+      : <UserMessage text={message.text} />
+    }
+  </>
 );
 
 export default ChatMessage;
