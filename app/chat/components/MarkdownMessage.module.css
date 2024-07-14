@@ -50,3 +50,38 @@
   line-height: 1.5; /* Ajusta a altura da linha conforme necessário */
   list-style: auto;
 }
+
+/* Estilos para tabelas */
+.markdownBody table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  color: #eaeaea;
+}
+
+.markdownBody th,
+.markdownBody td {
+  padding: 0.5em 1em;
+  border: 1px solid #333; /* Borda cinza escuro */
+}
+
+.markdownBody th {
+  background-color: #111; /* Fundo preto mais escuro para o cabeçalho */
+  color: #eaeaea; /* Texto branco/cinza claro */
+  text-align: left;
+}
+
+.markdownBody tr:nth-child(even) {
+  background-color: #222; /* Fundo cinza escuro para linhas pares */
+}
+
+.markdownBody tr:nth-child(odd) {
+  background-color: #1a1a1a; /* Fundo preto para linhas ímpares */
+}
+
+/* Estilo para destacar a primeira coluna */
+.markdownBody td:first-child {
+  font-weight: bold;
+  color: #eaeaea;
+}
