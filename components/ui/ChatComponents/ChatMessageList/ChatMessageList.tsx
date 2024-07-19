@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import useScrollToBottom from '@/hooks/useScrollToBottom';
 import ScrollButton from '@/components/ui/ScrollButton';
 import ChatMessage from "@/components/ui/ChatComponents/ChatMessage";
@@ -14,8 +14,8 @@ const ChatMessageList: React.FC<ChatMessageListProps> = ({ messages }) => {
 
   return (
     <>
-      <div ref={messagesContainerRef} className="flex-grow overflow-y-auto px-4 xl:px-0 py-4 md:py-4 bg-black-900 flex flex-col-reverse">
-        {messages.slice(0).reverse().map((msg, index) => (
+      <div ref={messagesContainerRef} className="flex-grow overflow-y-auto px-4 xl:px-0 py-4 md:py-4 bg-black-900 flex flex-col"      >
+        {messages.map((msg, index) => (
           <ChatMessage key={index} message={msg} />
         ))}
       </div>
