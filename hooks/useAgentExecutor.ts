@@ -1,36 +1,21 @@
-import { useEffect, useRef } from 'react';
-import { AgentExecutor } from "langchain/agents";
-import { createAgentExecutor } from '@/utils/financial-agent/agentSetup';
+import { BaseMessage } from "@langchain/core/messages";
+import { END, StateGraphArgs } from "@langchain/langgraph";
 
-interface AgentExecutorHook {
-  sendMessage: (message: string) => Promise<string>;
+interface AgentStateChannels {
+  messages: BaseMessage[];
+  // The agent node that last performed work
+  next: string;
 }
 
-const useAgentExecutor = (): AgentExecutorHook => {
-  const agentExecutorRef = useRef<AgentExecutor | null>(null);
-
-  useEffect(() => {
-    const setupAgent = async () => {
-      const executor = await createAgentExecutor();
-      agentExecutorRef.current = executor;
-    };
-
-    setupAgent();
-
-    return () => { };
-  }, []);
-
-  const sendMessage = async (message: string): Promise<string> => {
-    const executor = agentExecutorRef.current;
-    if (!executor) {
-      throw new Error('Agent Executor not initialized yet.');
-    }
-
-    const response = await executor.invoke({ input: message });
-    return response.output;
-  };
-
-  return { sendMessage };
+// This defines the object that is passed between each node
+// in the graph. We will create different nodes for each agent and tool
+const agentStateChannels: StateGraphArgs<AgentStateChannels>["channels"] = {
+  messages: {
+    value: (x?: BaseMessage[], y?: BaseMessage[]) => (x ?? []).concat(y ?? []),
+    default: () => [],
+  },
+  next: {
+    value: (x?: string, y?: string) => y ?? x ?? END,
+    default: () => END,
+  },
 };
-
-export default useAgentExecutor;
