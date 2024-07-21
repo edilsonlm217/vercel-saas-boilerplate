@@ -22,7 +22,9 @@
     "supabase:pull": "npx supabase db pull"
   },
   "dependencies": {
-    "@langchain/core": "^0.2.15",
+    "@langchain/community": "^0.2.20",
+    "@langchain/core": "^0.2.17",
+    "@langchain/langgraph": "^0.0.29",
     "@langchain/openai": "^0.2.1",
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-toast": "^1.1.5",
