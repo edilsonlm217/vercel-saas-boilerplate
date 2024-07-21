@@ -13,18 +13,31 @@ export async function POST(req: Request) {
     const graph = await createAgentGraph();
     const config = { configurable: { thread_id: "example-thread-1" } };
 
-    // Inicializa o streaming das mensagens
-    for await (
-      const { messages } of await graph.stream(inputs, {
-        ...config,
-        streamMode: "values",
-      })
-    ) {
-      // Retorna a primeira resposta com as mensagens processadas
-      return new Response(JSON.stringify({ messages }), {
-        headers: { "Content-Type": "application/json" },
-      });
-    }
+    // Cria um ReadableStream para enviar dados ao cliente em tempo real
+    const stream = new ReadableStream({
+      start(controller) {
+        (async () => {
+          try {
+            for await (const { messages } of await graph.stream(inputs, {
+              ...config,
+              streamMode: "values",
+            })) {
+              // Envia cada mensagem como uma parte do stream
+              controller.enqueue(JSON.stringify({ messages }) + "\n");
+            }
+            // Finaliza o stream
+            controller.close();
+          } catch (error) {
+            controller.error(error);
+          }
+        })();
+      },
+    });
+
+    // Retorna o stream como uma resposta
+    return new Response(stream, {
+      headers: { "Content-Type": "application/json" },
+    });
   } catch (error) {
     // Tratamento de erros com verificação de tipo
     let errorMessage = 'An unknown error occurred';
