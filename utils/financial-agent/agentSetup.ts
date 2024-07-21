@@ -2,6 +2,7 @@ import { AIMessage, BaseMessage } from "@langchain/core/messages";
 import { DynamicStructuredTool } from "@langchain/core/tools";
 import { StateGraphArgs, END, START, StateGraph, MemorySaver, CompiledStateGraph } from "@langchain/langgraph";
 import { ToolNode } from "@langchain/langgraph/prebuilt";
+import { HumanMessage } from "@langchain/core/messages";
 
 import { z } from "zod";
 
@@ -89,4 +90,8 @@ export const createAgentGraph = async () => {
   const graph = workflow.compile({ checkpointer, interruptBefore: ["tools"] });
 
   return graph;
+}
+
+export function createInputs(text: string) {
+  return { messages: [new HumanMessage(text)] };
 }
