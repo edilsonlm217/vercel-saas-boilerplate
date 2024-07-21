@@ -1,11 +1,11 @@
-import { createInputs, getAgentGraph } from "@/utils/financialAgentSetup";
-import { createStreamingResponse } from "@/utils/streamHelper";
+import { createStreamingResponse } from "@/utils/helpers";
+import { createAgentGraph, createInputs } from "@/utils/financial-agent/agentSetup";
 
 export async function POST(req: Request) {
   try {
     const { text } = await req.json();
     const inputs = createInputs(text);
-    const graph = await getAgentGraph();
+    const graph = await createAgentGraph();
     const config = { configurable: { thread_id: "example-thread-1" } };
 
     // Função geradora para streaming
@@ -19,7 +19,7 @@ export async function POST(req: Request) {
     };
 
     // Cria e retorna a resposta de streaming
-    return await createStreamingResponse(streamGenerator);
+    return createStreamingResponse(streamGenerator);
   } catch (error) {
     let errorMessage = 'An unknown error occurred';
     if (error instanceof Error) {
