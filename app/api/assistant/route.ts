@@ -1,5 +1,5 @@
 import { createStreamingResponse } from "@/utils/helpers";
-import { createAgentGraph, createInputs } from "@/utils/financial-agent/agentSetup";
+import { createAgentGraph, createInputs } from "@/utils/agent/setup";
 
 export async function POST(req: Request) {
   try {
