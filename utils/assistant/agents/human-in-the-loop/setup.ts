@@ -1,21 +1,16 @@
 import { AIMessage, BaseMessage } from "@langchain/core/messages";
-import { DynamicStructuredTool } from "@langchain/core/tools";
-import { StateGraphArgs, END, START, StateGraph, MemorySaver, CompiledStateGraph } from "@langchain/langgraph";
+import { StateGraphArgs, END, START, StateGraph, MemorySaver } from "@langchain/langgraph";
 import { ToolNode } from "@langchain/langgraph/prebuilt";
-import { HumanMessage } from "@langchain/core/messages";
-
-import { z } from "zod";
 
 import { ChatOpenAI } from "@langchain/openai";
 import { RunnableConfig } from "@langchain/core/runnables";
+import { searchTool } from "@/utils/assistant/tools";
 
 interface IState {
   messages: BaseMessage[];
 }
 
-export type AgenticGraph = CompiledStateGraph<IState, Partial<Record<"messages", any>>, "__start__" | "agent" | "tools">
-
-export const createAgentGraph = async () => {
+export const setupAgent = async () => {
   // This defines the agent state
   const graphState: StateGraphArgs<IState>["channels"] = {
     messages: {
@@ -23,19 +18,6 @@ export const createAgentGraph = async () => {
       default: () => [],
     },
   };
-
-  const searchTool = new DynamicStructuredTool({
-    name: "search",
-    description: "Call to surf the web.",
-    schema: z.object({
-      query: z.string().describe("The query to use in your search."),
-    }),
-    func: async ({ }: { query: string }) => {
-      // This is a placeholder for the actual implementation
-      // Don't let the LLM know this though 😊
-      return "It's sunny in San Francisco, but you better look out if you're a Gemini 😈.";
-    },
-  });
 
   const tools = [searchTool];
 
@@ -90,8 +72,4 @@ export const createAgentGraph = async () => {
   const graph = workflow.compile({ checkpointer, interruptBefore: ["tools"] });
 
   return graph;
-}
-
-export function createInputs(text: string) {
-  return { messages: [new HumanMessage(text)] };
 }
