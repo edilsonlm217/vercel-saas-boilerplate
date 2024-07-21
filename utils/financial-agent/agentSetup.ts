@@ -1,6 +1,6 @@
 import { AIMessage, BaseMessage } from "@langchain/core/messages";
 import { DynamicStructuredTool } from "@langchain/core/tools";
-import { StateGraphArgs, END, START, StateGraph, MemorySaver } from "@langchain/langgraph";
+import { StateGraphArgs, END, START, StateGraph, MemorySaver, CompiledStateGraph } from "@langchain/langgraph";
 import { ToolNode } from "@langchain/langgraph/prebuilt";
 
 import { z } from "zod";
@@ -11,6 +11,8 @@ import { RunnableConfig } from "@langchain/core/runnables";
 interface IState {
   messages: BaseMessage[];
 }
+
+export type AgenticGraph = CompiledStateGraph<IState, Partial<Record<"messages", any>>, "__start__" | "agent" | "tools">
 
 export const createAgentGraph = async () => {
   // This defines the agent state
