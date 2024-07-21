@@ -6,14 +6,14 @@ export const getURL = (path: string = '') => {
   // Check if NEXT_PUBLIC_SITE_URL is set and non-empty. Set this to your site URL in production env.
   let url =
     process?.env?.NEXT_PUBLIC_SITE_URL &&
-    process.env.NEXT_PUBLIC_SITE_URL.trim() !== ''
+      process.env.NEXT_PUBLIC_SITE_URL.trim() !== ''
       ? process.env.NEXT_PUBLIC_SITE_URL
       : // If not set, check for NEXT_PUBLIC_VERCEL_URL, which is automatically set by Vercel.
-        process?.env?.NEXT_PUBLIC_VERCEL_URL &&
-          process.env.NEXT_PUBLIC_VERCEL_URL.trim() !== ''
+      process?.env?.NEXT_PUBLIC_VERCEL_URL &&
+        process.env.NEXT_PUBLIC_VERCEL_URL.trim() !== ''
         ? process.env.NEXT_PUBLIC_VERCEL_URL
         : // If neither is set, default to localhost for local development.
-          'http://localhost:3000/';
+        'http://localhost:3000/';
 
   // Trim the URL and remove trailing slash if exists.
   url = url.replace(/\/+$/, '');
@@ -131,3 +131,39 @@ export const getErrorRedirect = (
     disableButton,
     arbitraryParams
   );
+
+export const createReadableStream = (chunks: AsyncGenerator<{ messages: any; }, void, unknown>) => {
+  return new ReadableStream({
+    async start(controller) {
+      try {
+        for await (const chunk of chunks) {
+          controller.enqueue(JSON.stringify(chunk) + "\n");
+        }
+        controller.close();
+      } catch (error) {
+        controller.error(error);
+      }
+    },
+  });
+}
+
+interface Options {
+  contentType?: string;
+  additionalHeaders?: Record<string, string>;
+}
+
+export const getResponseHeaders = (options?: Options) => {
+  const defaultHeaders = {
+    "Content-Type": "application/json",
+  };
+
+  if (options?.contentType) {
+    defaultHeaders["Content-Type"] = options.contentType;
+  }
+
+  if (options?.additionalHeaders) {
+    Object.assign(defaultHeaders, options.additionalHeaders);
+  }
+
+  return defaultHeaders;
+}
