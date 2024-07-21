@@ -1,33 +1,28 @@
-import { createStreamingResponse } from "@/utils/helpers";
-import { createAgentGraph, createInputs } from "@/utils/agent/setup";
+import { z } from 'zod';
+import { queryAssistant } from '@/utils/assistant';
+import { createReadableStream, getResponseHeaders } from "@/utils/helpers";
+
+const querySchema = z.object({
+  query: z.string().min(10),
+  threadId: z.string().uuid(),
+})
 
 export async function POST(req: Request) {
-  try {
-    const { text } = await req.json();
-    const inputs = createInputs(text);
-    const graph = await createAgentGraph();
-    const config = { configurable: { thread_id: "example-thread-1" } };
+  const { query, threadId } = await req.json();
 
-    // Função geradora para streaming
-    const streamGenerator = async function* () {
-      for await (const { messages } of await graph.stream(inputs, {
-        ...config,
-        streamMode: "values",
-      })) {
-        yield { messages };
-      }
-    };
+  const parsedData = querySchema.safeParse({ query, threadId });
 
-    // Cria e retorna a resposta de streaming
-    return createStreamingResponse(streamGenerator);
-  } catch (error) {
-    let errorMessage = 'An unknown error occurred';
-    if (error instanceof Error) {
-      errorMessage = error.message;
-    }
-    return new Response(JSON.stringify({ error: errorMessage }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
+  if (!parsedData.success) {
+    return new Response(
+      JSON.stringify({ error: parsedData.error.errors[0].message }), {
+      status: 400,
+      headers: getResponseHeaders(),
     });
   }
+
+  const chunks = queryAssistant(query, threadId);
+  const stream = createReadableStream(chunks);
+
+  const headers = getResponseHeaders();
+  return new Response(stream, { headers });
 }
