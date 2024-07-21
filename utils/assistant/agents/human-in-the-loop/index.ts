@@ -1,16 +1,21 @@
-import { HumanMessage } from "@langchain/core/messages";
+import { AIMessageChunk, HumanMessage } from "@langchain/core/messages";
 import { setupAgent } from "./setup";
 
 export const runAgent = async function* (input: string, threadId: string) {
-  const graph = await setupAgent();
+  const agent = await setupAgent();
 
   const inputs = createInputs(input);
   const config = { configurable: { thread_id: threadId } };
 
-  for await (
-    const { messages } of await graph.stream(inputs, { ...config, streamMode: "values" })
-  ) {
-    yield { messages };
+  const eventStream = agent.streamEvents(inputs, { version: "v2", ...config });
+
+  for await (const { event, data } of eventStream) {
+    if (event === "on_chat_model_stream") {
+      const msg = data.chunk as AIMessageChunk;
+      if (!msg.tool_call_chunks?.length) {
+        yield msg.content;
+      }
+    }
   }
 };
 

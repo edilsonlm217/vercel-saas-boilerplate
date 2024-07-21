@@ -1,4 +1,5 @@
 import type { Tables } from '@/types_db';
+import { MessageContent } from '@langchain/core/messages';
 
 type Price = Tables<'prices'>;
 
@@ -132,12 +133,12 @@ export const getErrorRedirect = (
     arbitraryParams
   );
 
-export const createReadableStream = (chunks: AsyncGenerator<{ messages: any; }, void, unknown>) => {
+export const createReadableStream = (chunks: AsyncGenerator<MessageContent, void, unknown>) => {
   return new ReadableStream({
     async start(controller) {
       try {
         for await (const chunk of chunks) {
-          controller.enqueue(JSON.stringify(chunk) + "\n");
+          controller.enqueue(chunk);
         }
         controller.close();
       } catch (error) {

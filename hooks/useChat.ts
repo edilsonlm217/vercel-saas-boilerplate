@@ -1,8 +1,5 @@
-import { useState, useCallback } from 'react';
-
+import { useState, useCallback, useEffect } from 'react';
 import useMessageManager from './useMessageManager';
-import useAgentExecutor from './useAgentExecutor';
-
 import { Sender } from '@/types/sender.enum';
 import { Message } from '@/types/message.types';
 
@@ -18,29 +15,59 @@ export interface ChatHook {
 }
 
 const useChat = (): ChatHook => {
-  const { messages, addMessage } = useMessageManager();
+  const { messages, addMessage, updateLastMessage } = useMessageManager();
   const [message, setMessage] = useState('');
   const [isStreaming, setIsStreaming] = useState(false);
-  const { sendMessage: sendAgentMessage } = useAgentExecutor();
+  const [streamReader, setStreamReader] = useState<ReadableStreamDefaultReader | null>(null);
 
   const sendMessage = useCallback(() => {
     const trimmedMessage = message.trim();
     if (trimmedMessage) {
-      addMessage(trimmedMessage, Sender.User);
+      addMessage(trimmedMessage, Sender.User); // Add the user message
       setMessage('');
       setIsStreaming(true);
-      sendAgentMessage(trimmedMessage)
-        .then(agentResponse => {
-          addMessage(agentResponse, Sender.Bot);
+
+      fetch('/api/assistant', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ query: trimmedMessage, threadId: '9617cd52-db27-4055-84e6-fcda23c26d2c' }),
+      })
+        .then(response => {
+          const reader = response.body?.getReader();
+          if (reader) {
+            setStreamReader(reader);
+            const decoder = new TextDecoder();
+            let result = '';
+
+            // Add the initial message for the bot
+            addMessage('', Sender.Bot);
+
+            reader.read().then(function processText({ done, value }) {
+              if (done) {
+                setIsStreaming(false);
+                return;
+              }
+
+              const chunk = decoder.decode(value, { stream: true });
+              result += chunk;
+
+              // Update the last message with the streaming result
+              updateLastMessage(result);
+
+              reader.read().then(processText);
+            });
+          } else {
+            setIsStreaming(false);
+          }
         })
         .catch(error => {
           console.error('Error sending message to agent:', error);
-        })
-        .finally(() => {
           setIsStreaming(false);
         });
     }
-  }, [message, addMessage, sendAgentMessage]);
+  }, [message, addMessage, updateLastMessage]);
 
   const handleInput = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.target.value);
@@ -52,15 +79,18 @@ const useChat = (): ChatHook => {
       if (!isStreaming) {
         sendMessage();
       } else {
-        setMessage((prevMessage) => prevMessage + '\n');
+        setMessage(prevMessage => prevMessage + '\n');
       }
     }
   }, [sendMessage, isStreaming]);
 
   const handleStop = useCallback(() => {
+    if (streamReader) {
+      streamReader.cancel();
+    }
     setIsStreaming(false);
     console.log('Streaming stopped');
-  }, []);
+  }, [streamReader]);
 
   const isMessageEmpty = message.trim().length === 0;
 
