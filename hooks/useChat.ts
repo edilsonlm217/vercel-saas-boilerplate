@@ -1,6 +1,9 @@
 import { useState, useCallback } from 'react';
-import useMessageManager from './useMessageManager';
-import useStreaming from './useStreaming';
+
+import useMessageManager from '@/hooks/useMessageManager';
+import useStreaming from '@/hooks/useStreaming';
+import useFetch from '@/hooks/useFetch';
+
 import { Sender } from '@/types/sender.enum';
 import { Message } from '@/types/message.types';
 
@@ -19,17 +22,17 @@ const useChat = (): ChatHook => {
   const { messages, addMessage, updateLastMessage } = useMessageManager();
   const [message, setMessage] = useState('');
 
-  const handleApiCall = useCallback(async (query: string) => {
-    const response = await fetch('/api/assistant', {
+  const { fetchData } = useFetch<ReadableStream>();
+
+  const handleApiCall = useCallback((query: string) => {
+    return fetchData('/api/assistant', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ query, threadId: '9617cd52-db27-4055-84e6-fcda23c26d2c' }),
     });
-
-    return response.body;
-  }, []);
+  }, [fetchData]);
 
   const { isStreaming, startStreaming, stopStreaming } = useStreaming(
     (message: string) => updateLastMessage(message),
