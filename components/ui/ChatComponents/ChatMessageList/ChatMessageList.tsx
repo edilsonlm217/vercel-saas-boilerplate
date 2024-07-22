@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import useScrollToBottom from '@/hooks/useScrollToBottom';
 import ScrollButton from '@/components/ui/ScrollButton';
 import ChatMessage from "@/components/ui/ChatComponents/ChatMessage";
