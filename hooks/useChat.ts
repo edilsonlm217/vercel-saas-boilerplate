@@ -1,9 +1,6 @@
 import { useState, useCallback } from 'react';
-
-import useMessageManager from '@/hooks/useMessageManager';
-import useStreaming from '@/hooks/useStreaming';
-import useFetchStream from '@/hooks/useFetchStream';
-
+import useMessageManager from './useMessageManager';
+import useStreaming from './useStreaming';
 import { Sender } from '@/types/sender.enum';
 import { Message } from '@/types/message.types';
 
@@ -16,17 +13,14 @@ export interface ChatHook {
   isMessageEmpty: boolean;
   isStreaming: boolean;
   handleStop: () => void;
-  error: string | null;
 }
 
 const useChat = (): ChatHook => {
   const { messages, addMessage, updateLastMessage } = useMessageManager();
   const [message, setMessage] = useState('');
 
-  const { stream, error, fetchStream } = useFetchStream();
-
   const handleApiCall = useCallback(async (query: string) => {
-    await fetchStream('/api/assistant', {
+    const response = await fetch('/api/assistant', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -34,12 +28,8 @@ const useChat = (): ChatHook => {
       body: JSON.stringify({ query, threadId: '9617cd52-db27-4055-84e6-fcda23c26d2c' }),
     });
 
-    if (stream) {
-      return stream;
-    }
-
-    return null;
-  }, [fetchStream, stream]);
+    return response.body;
+  }, []);
 
   const { isStreaming, startStreaming, stopStreaming } = useStreaming(
     (message: string) => updateLastMessage(message),
@@ -81,7 +71,6 @@ const useChat = (): ChatHook => {
     isMessageEmpty,
     isStreaming,
     handleStop: stopStreaming,
-    error: error ? error.message : null,
   };
 };
 
