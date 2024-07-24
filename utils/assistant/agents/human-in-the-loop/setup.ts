@@ -26,7 +26,6 @@ export const setupAgent = async () => {
   const model = new ChatOpenAI({
     model: "gpt-4",
     temperature: 0,
-    openAIApiKey: "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"
   });
 
   // After we've done this, we should make sure the model knows that it has these tools available to call.
